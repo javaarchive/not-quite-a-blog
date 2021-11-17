@@ -138,5 +138,22 @@ Opcode 1 data:
     "any": 100
 }
 ```
-9. Some fingerprint sha thing is sent
-**TODO**
+9. Opcode 4 sent, once again with video, this time with connection details
+```
+{
+  "video_codec": "H264",
+  "sdp": "m=audio [5 digit port] ICE/SDP\na=fingerprint:sha-256 [32 2 digit hexadecimal numbers seperated by colons : ]\nc=IN IP4 [ipv4 ip]\na=rtcp:[5 digit port]\na=ice-ufrag:619r\na=ice-pwd:+[random combination of 21 letters uppercase and lowercase]\na=fingerprint:sha-256 [32 2 digit hexadecimal numbers seperated by colons : ]\na=candidate:1 1 UDP 4261412862 213.179.204.203 50003 typ host\n",
+  "media_session_id": "32 hashlike string",
+  "audio_codec": "opus"
+}
+```
+Note: No spaces were added or removed below, notes for "sdp" are written between [ ]
+10. Repeatdly during the call opcode 5 is sent
+```
+{
+  "speaking": 0 or 1 as boolean,
+  "delay": 5,
+  "ssrc": 9 digit number
+}
+```
+You can probaly guess what "speaking" represents. "delay" is the default value set by the client. Also even on idle the current `Date.now()` appears to be sent every once in a while with opcode 3 for the client and opcode 6 probaly for synchronization purposes. 
